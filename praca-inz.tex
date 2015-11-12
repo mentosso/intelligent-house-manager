@@ -44,7 +44,7 @@
 
 
 
-\section{Przegląd istniejących rozwiązań}
+\section{Przegląd wybranych rozwiązań}
 \subsection{Domoticz.com}
 Od czasu popularyzacji rozwiązań pokroju Arduino i Raspberry Pi, hobbystyczne projekty inteligentnych domów są coraz częściej realizowane. Sprzyja temu fakt, że ceny podzespołów wymaganych do realizacji projektu są coraz niższe, a osoby zainteresowane mają coraz więcej literatury dostępnej w Internecie. Takimi właśnie hobbystami byli twórcy platformy \textit{Domoticz}. Jest to zagraniczny serwis udostępniający multiplatformowe rozwiązania dla inteligentnych domów. Jest on skierowany głównie do hobbystów. Jak można przeczytać na stronie domowej projektu (\url{http://www.domoticz.com/}), \textit{Domoticz} jest systemem automatyki domowej, który pozwala na monitorowanie i konfigurację urządzeń, takich jak: światła, przełączniki, różnego rodzaju sensory i mierniki, jak np temperatury, deszczu, wiatru, UV, prądu, gazu i wody.
 
@@ -65,10 +65,16 @@ System Fibaro opiera się na topologii sieci typu \textit{mesh}. Urządzenia ł�
 \end{figure}
 
 \section{Zarys koncepcji}
-Jednostka centralna
-Czujniki
-Aplikacja webowa
-Akcja - reakcja
+Koncepcyjnie, inteligentny dom można podzielić na 3 główne części. Są one od siebie ściśle zależne,
+% Jednostka centralna
+% Czujniki
+% Aplikacja webowa
+% Akcja - reakcja
+
+\chapter{Architektura systemu}
+\section{Topologia systemu}
+\url{https://pl.wikipedia.org/wiki/Topologia_gwiazdy}
+\chapter{Specyfikacja systemu}
 \chapter{Wybrane technologie}
 \section{Hardware}
 \section{Software}
@@ -76,7 +82,7 @@ Akcja - reakcja
 Serwis internetowy wykonany został w oparciu o następujące technologie:
 \begin{itemize}
 	\item \textbf{Ruby on Rails} - wnętrze (back-end) portalu webowego, które odpowiedzialne jest za wykonywanie określonych zadań na podstawie danych otrzymanych z fasady (front-end),
-	\item \textbf{AngularJS} - fasada (front-end) - jej zadaniem jest komunikacja z użytkownikiem (odbieranie od niego danych oraz przekazywanie ich do back-end'u).
+	\item \textbf{AngularJS} - fasada (front-end) - jej zadaniem jest komunikacja z użytkownikiem (odbieranie od niego danych oraz przekazywanie ich do back-end'u). AngularJS jest frameworkiem JavaScript'owym, który wymaga stosowania wzorca projektowego \emph{MVC} (ang. Model-View-Controller).
 \end{itemize}
 Ponadto wykorzystane zostały następujące elementy:
 \begin{itemize}
@@ -85,12 +91,8 @@ Ponadto wykorzystane zostały następujące elementy:
 \end{itemize}
 
 \subsection{Baza danych}
-Jako system bazodanowy wykorzystany został MySQL w wersji 5.6. Niewątpliwymi zaletami tego systemu jest to, że posiada on wysoki stopień niezawodności, jest darmowy oraz powszechnie dostępny i wspierany. Dodatkowym atutem jest dostępność graficznego narzędzia usprawniającego korzystanie z bazy danych, jakim jest MySQL Workbench. Jest to aplikacja, dzięki której można połączyć się z kilkoma bazami danych (np. na serwerze produkcyjnym oraz lokalnej kopii roboczej), co w przy pracy z aplikacją webową, w której zmiany w bazie danych muszą być na bieżąco śledzone, a dane często wymagają bezpośredniej zmiany/aktualizacji, jest niezwykle pożyteczną funkcjonalnością.
+Jako system bazodanowy wykorzystany został MySQL w wersji 5.6. Niewątpliwymi zaletami tego systemu jest to, że posiada on wysoki stopień niezawodności, jest darmowy oraz powszechnie dostępny i wspierany.
 
-\chapter{Architektura systemu}
-\section{Topologia systemu}
-\url{https://pl.wikipedia.org/wiki/Topologia_gwiazdy}
-\chapter{Specyfikacja systemu}
 \chapter{Implementacja}
 \chapter{Testy}
 \section{Aplikacja internetowa}
@@ -200,6 +202,9 @@ Ostatecznie pokrycie kodu źródłowego testami jednostkowymi wynosi około 75\%
 
 \begin{thebibliography}{inteligencja}
 	\addcontentsline{toc}{chapter}{Bibliografia}
+
+	\bibitem{inteligentne domy}
+	Z. Piątek, \emph{Od automatyki budynkowej do inteligentnych domów}, dostępne pod adresem \url{http://automatykab2b.pl/}, aktualne na dzień 31.10.2015r.
 	
 	\bibitem{rails guide}
 	\emph{Ruby on Rails Guides}, dostępne pod adresem: \url{http://guides.rubyonrails.org/},\\ aktualne na dzień 14.06.2015r.
