@@ -97,107 +97,107 @@ Jako system bazodanowy wykorzystany został MySQL w wersji 5.6. Niewątpliwymi z
 \chapter{Testy}
 \section{Aplikacja internetowa}
 \subsection{Testy jednostkowe}
-Do testów jednostkowych dla aplikacji webowej użyliśmy biblioteki RSpec, służącej do testowania kodu Rubiego, ze wsparciem dla frameworka Rails. Wybraliśmy tą bibliotekę, ponieważ wspiera ona idee Model-View-Controller, w oparciu o którą powstała nasza aplikacja. Dużą wygodą jest również automatyczna konfiguracja środowiska testowego, która polega m. in.  na osobnej, testowej bazie danych, która jest tworzona na początku wykonywania testów i czyszczona po zakończeniu każdego przypadku testowege.
+% Do testów jednostkowych dla aplikacji webowej użyliśmy biblioteki RSpec, służącej do testowania kodu Rubiego, ze wsparciem dla frameworka Rails. Wybraliśmy tą bibliotekę, ponieważ wspiera ona idee Model-View-Controller, w oparciu o którą powstała nasza aplikacja. Dużą wygodą jest również automatyczna konfiguracja środowiska testowego, która polega m. in.  na osobnej, testowej bazie danych, która jest tworzona na początku wykonywania testów i czyszczona po zakończeniu każdego przypadku testowege.
 
-RSpec posiada bardzo intuicyjną składnie, przyjazna użytkownikowi naszym zdaniem. Testy podzielone są na 3 poziomową strukturę, każdy poziom zaczyna się słowem kluczowym:
-\begin{enumerate}
-	\item ,,describe'' – tu definiujemy jaką funkcje/klasę/moduł ma sprawdzać dany zbiór testów,
-	\item ,,context'' – to miejsce służy do określenia warunków testu,
-	\item ,,it'' – mówi nam jak powinien się zachować testowany moduł.
-\end{enumerate}
+% RSpec posiada bardzo intuicyjną składnie, przyjazna użytkownikowi naszym zdaniem. Testy podzielone są na 3 poziomową strukturę, każdy poziom zaczyna się słowem kluczowym:
+% \begin{enumerate}
+% 	\item ,,describe'' – tu definiujemy jaką funkcje/klasę/moduł ma sprawdzać dany zbiór testów,
+% 	\item ,,context'' – to miejsce służy do określenia warunków testu,
+% 	\item ,,it'' – mówi nam jak powinien się zachować testowany moduł.
+% \end{enumerate}
 
-Przykładowy pojedynczy przypadek testowy:
+% Przykładowy pojedynczy przypadek testowy:
 
-\begin{lstlisting}[language=Ruby, caption={RSpec test jednostkowy.}]
-RSpec.describe TripsController, :controller do #
-Describe'POST #create' do
-context 'with valid attributes' do
-it 'creates the trip' do
-login_user
-post :create, trip: attributes_for(:trip_with_path), format: :json
-expect(Trip.count).to eq(1)
-end
-end
-end
-end
-\end{lstlisting}
+% \begin{lstlisting}[language=Ruby, caption={RSpec test jednostkowy.}]
+% RSpec.describe TripsController, :controller do #
+% Describe'POST #create' do
+% context 'with valid attributes' do
+% it 'creates the trip' do
+% login_user
+% post :create, trip: attributes_for(:trip_with_path), format: :json
+% expect(Trip.count).to eq(1)
+% end
+% end
+% end
+% end
+% \end{lstlisting}
 
-Powyższy test ma za zadanie sprawdzić czy dane wysłane w odpowiednim formacie zapytaniem http post, przekazane do funkcji ,,create'' klasy ,,TripsController'' stworzą w bazie danych nowy rekord w tabeli Trip. 
+% Powyższy test ma za zadanie sprawdzić czy dane wysłane w odpowiednim formacie zapytaniem http post, przekazane do funkcji ,,create'' klasy ,,TripsController'' stworzą w bazie danych nowy rekord w tabeli Trip. 
 
-Dla ułatwienia wprowadzania atrybutów do testowanych metod lub dodawania rekordów do bazy danych nie wykorzystując napisanych przez siebie metod posłużyliśmy się biblioteką ,,FactoryGirl'', która implementuje wzorzec projektowy fabryki. Definicja obiektu jest bardzo prosta:
+% Dla ułatwienia wprowadzania atrybutów do testowanych metod lub dodawania rekordów do bazy danych nie wykorzystując napisanych przez siebie metod posłużyliśmy się biblioteką ,,FactoryGirl'', która implementuje wzorzec projektowy fabryki. Definicja obiektu jest bardzo prosta:
 
-\begin{lstlisting}[language=Ruby, caption={Definicja FactoryGirl.}]
-FactoryGirl.define do 
-factory :full_trip, class: Trip do
-distance 100
-avg_rpm 2500
-avg_speed 94
-avg_fuel 8.9
-date '2015-05-14T21:23:11.510Z'
-mark 5.0
-user_id 1
-beginning 'Start'
-finish 'Finish'
-challenge_id nil
-engine_type_id 1
-engine_displacement_id 1
-end
-end
-\end{lstlisting}
+% \begin{lstlisting}[language=Ruby, caption={Definicja FactoryGirl.}]
+% FactoryGirl.define do 
+% factory :full_trip, class: Trip do
+% distance 100
+% avg_rpm 2500
+% avg_speed 94
+% avg_fuel 8.9
+% date '2015-05-14T21:23:11.510Z'
+% mark 5.0
+% user_id 1
+% beginning 'Start'
+% finish 'Finish'
+% challenge_id nil
+% engine_type_id 1
+% engine_displacement_id 1
+% end
+% end
+% \end{lstlisting}
 
-Poniżej znajduje się użycie metody "FactoryGirl.create'', która tworzy obiekt w bazie danych. Ten przykład ilustruje również strukturę zbioru testów dla pojedynczej metody:
+% Poniżej znajduje się użycie metody "FactoryGirl.create'', która tworzy obiekt w bazie danych. Ten przykład ilustruje również strukturę zbioru testów dla pojedynczej metody:
 
-\begin{lstlisting}[language=Ruby, caption={Użycie FactoryGirl.}]
-describe 'GET #mytrips' do
-context 'with valid attributes' do
-let!(:login) { login_user }
-let(:current_user_id) { login.id }
-it 'renders all user\'s trips as json' do
-FactoryGirl.create(:engine_displacement)
-FactoryGirl.create(:engine_type)
-FactoryGirl.create(:fuel_consumption)
-FactoryGirl.create(:full_trip, user_id: current_user_id)
-get :mytrips, format: :json
-expect(response).to be_success
-json = JSON.parse(response.body)
-expect(json).not_to be_empty
-expect(json[0].length).to eq(20)
-end
-it 'renders empty array when user has no trips' do
-get :mytrips, format: :json
-expect(response).to be_success
-json = JSON.parse(response.body)
-expect(json).to be_empty
-end
-end
+% \begin{lstlisting}[language=Ruby, caption={Użycie FactoryGirl.}]
+% describe 'GET #mytrips' do
+% context 'with valid attributes' do
+% let!(:login) { login_user }
+% let(:current_user_id) { login.id }
+% it 'renders all user\'s trips as json' do
+% FactoryGirl.create(:engine_displacement)
+% FactoryGirl.create(:engine_type)
+% FactoryGirl.create(:fuel_consumption)
+% FactoryGirl.create(:full_trip, user_id: current_user_id)
+% get :mytrips, format: :json
+% expect(response).to be_success
+% json = JSON.parse(response.body)
+% expect(json).not_to be_empty
+% expect(json[0].length).to eq(20)
+% end
+% it 'renders empty array when user has no trips' do
+% get :mytrips, format: :json
+% expect(response).to be_success
+% json = JSON.parse(response.body)
+% expect(json).to be_empty
+% end
+% end
 
-context 'with user not logged in' do
-it 'redirects to login page' do
-FactoryGirl.create(:engine_displacement)
-FactoryGirl.create(:engine_type)
-FactoryGirl.create(:full_trip)
-get :mytrips, format: :json
-expect(response).to have_http_status(401)
-end
-end
-end
-\end{lstlisting}
+% context 'with user not logged in' do
+% it 'redirects to login page' do
+% FactoryGirl.create(:engine_displacement)
+% FactoryGirl.create(:engine_type)
+% FactoryGirl.create(:full_trip)
+% get :mytrips, format: :json
+% expect(response).to have_http_status(401)
+% end
+% end
+% end
+% \end{lstlisting}
 
-Stworzyliśmy 19 testów jednostkowych. Badaliśmy pokrycie kodu aplikacji testami narzędziem Rcov. Tą analizę uruchamialiśmy po każdym commicie do repozytorium, dlatego wiemy jak się to kształtowało od moment skonfigurowania Rcov w Jenkinsie:
-\begin{figure}[h]
-	\centering
-	%\includegraphics[width=0.8\linewidth]{}
-	\caption{Wykres pokrycia kodu.}
-	\label{fig:testy}
-\end{figure}
+% Stworzyliśmy 19 testów jednostkowych. Badaliśmy pokrycie kodu aplikacji testami narzędziem Rcov. Tą analizę uruchamialiśmy po każdym commicie do repozytorium, dlatego wiemy jak się to kształtowało od moment skonfigurowania Rcov w Jenkinsie:
+% \begin{figure}[h]
+% 	\centering
+% 	%\includegraphics[width=0.8\linewidth]{}
+% 	\caption{Wykres pokrycia kodu.}
+% 	\label{fig:testy}
+% \end{figure}
 
-Ostatecznie pokrycie kodu źródłowego testami jednostkowymi wynosi około 75\%. Rcov pokazuje również dokładnie, które linie kodu są testowane:
-\begin{figure}[h]
-	\centering
-	%\includegraphics[width=0.9\linewidth]{}
-	\caption{Raport Rcov dla pliku trips\_controller.rb.}
-	\label{fig:raport}
-\end{figure}
+% Ostatecznie pokrycie kodu źródłowego testami jednostkowymi wynosi około 75\%. Rcov pokazuje również dokładnie, które linie kodu są testowane:
+% \begin{figure}[h]
+% 	\centering
+% 	%\includegraphics[width=0.9\linewidth]{}
+% 	\caption{Raport Rcov dla pliku trips\_controller.rb.}
+% 	\label{fig:raport}
+% \end{figure}
 \chapter{Podsumowanie}
 
 \begin{thebibliography}{inteligencja}
