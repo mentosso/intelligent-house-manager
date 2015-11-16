@@ -37,11 +37,35 @@
 \maketitle
 \tableofcontents
 \chapter{Wstęp}
-\section{Ogólny opis projektu}
-\section{Cel projektu}
-\section{Wymagania}
-\section{Ograniczenia}
+\section{Ogólny opis pracy}
 
+
+\section{Cel pracy}
+% Celem projektu jest zaprojektowanie, zamodelowanie, implementacja i wdrożenie systemu zarządzania inteligentnym domem działającym w oparciu o technologie internetowe i Raspberry Pi.
+Realizację projektu można podzielić na cztery etapy:
+\begin{enumerate}
+	\item projektowanie,
+	\item modelowanie,
+	\item implementację i testowanie,
+	\item wdrożenie systemu.
+\end{enumerate}
+Powyższe etapy składają się na pełny proces powstawania systemu informatycznego. Głównym celem projektu jest realizacja każdego z tych etapów, co wymaga zapoznania się ze standardami oraz technologią i ich praktycznym wykorzystaniem. Cel ten jest osiągnięty poprzez stworzenie systemu zarządzania inteligentnym domem. System ten łączy 3 obszary techniki: informatykę, elektronikę oraz automatykę. Jego interdyscyplinarność wymaga przynajmniej podstawowej wiedzy z każdego z obszarów.
+
+Metytorycznym celem pracy jest zapoznanie się z nowoczesnymi i bardzo przyszłosćiowymi rozwiązaniami, jakimi są inteligentne budynki. Dzięki stworzeniu platformy, która umożliwiała by niskim kosztem zmianę swojego mieszkania bądź domu w inteligentny budynek, możliwa by była znaczna popularyzacja inteligencji budynkowej. Niesie to za sobą znaczne korzyści - zarówno podniesienie komfortu życia, jak i oszczędności finansowe.
+
+\section{Zarys koncepcji}
+Koncepcyjnie, inteligentny dom można podzielić na dwie główne części. Są to czujniki i elementy aktywne oraz zintegrowany system zarządzania. Na najniższym poziomie znajdują się czujniki i elementy wykonawcze. Sensory odpowiadają za zbieranie danych na temat warunków panujących w budynku, np. temperatury i wilgotności powietrza, poziomu nasłonecznienia, stężenia dwutlenku i tlenku węgla, ruchu w pomieszczeniach. Na podstawie tych danych można sterować dużą ilością urządzeń oraz parametrów budynku. Przykładem może być sterowanie temperaturą ogrzewania i klimatyzacji, jasnością oświetlenia bądź stopniem otwarcia rolet. Kolejnym poziomem jest system zarządzania. Jest to kluczowy element systemu, który musi działać poprawnie i niezawodnie. Przyjmuje on dane z sensorów, steruje elementami aktywnymi systemu, obsługuje bazę danych i dostarcza interfejs użytkownika, ale przede wszystkim posiada algorytmy, przy pomocy których analizuje dane odebrane z czujników i odpowiednio używa elementów aktywnych.
+
+Jak zostało wcześniej wspomniane, do tematu inteligentnych domów można podejść na dwa sposoby - hobbystycznie i komercyjnie. Biorąc pod uwagę koszt podejścia komercyjnego oraz jego względny brak elastyczności, przy realizacji projektu przyjęte zostało podejście hobbystyczne.
+
+Jako przykład realizacji systemu zarządzania inteligentnym domem można podać system składający się z czujników, które mierzą temperaturę oraz wilgotność, symulatora elementów wykonawczych oraz systemu zarządzania.
+% Jednostka centralna
+% Czujniki
+% Aplikacja webowa
+% Akcja - reakcja
+
+\section{Wymagania}
+Głównym wymaganiem odnośnie projektu było zaprojektowanie i implementacja systemu składającego się z czujników, elementów aktywnych, jednostki centralnej, bazy danych i aplikacji webowej, w którym wszystkie elementy będą poprawnie ze sobą współpracować.
 
 
 \section{Przegląd wybranych rozwiązań}
@@ -63,13 +87,6 @@ System Fibaro opiera się na topologii sieci typu \textit{mesh}. Urządzenia ł�
 \caption{Schemat topoligii typu mesh.}
 \label{fig:Mesh-Network}
 \end{figure}
-
-\section{Zarys koncepcji}
-Koncepcyjnie, inteligentny dom można podzielić na 3 główne części. Są one od siebie ściśle zależne,
-% Jednostka centralna
-% Czujniki
-% Aplikacja webowa
-% Akcja - reakcja
 
 \chapter{Architektura systemu}
 \section{Topologia systemu}
