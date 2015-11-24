@@ -7,6 +7,7 @@
 \usepackage{listings}
 \usepackage{color}
 \frenchspacing
+\linespread{1.3}
 \usepackage{indentfirst}
 \usepackage{caption}
 
@@ -40,11 +41,11 @@
 \section{Ogólny opis pracy}
 Inteligentny dom, który monitoruje warunki panujące w środku, może samodzielnie sterować wieloma urządzeniami i elementami budynku, zna nasze zwyczaje i z którym możemy nawet porozmawiać, dla wielu jest zagadnieniem rodem z filmów sc-fi. Ale czy rzeczywiście tak jest? 
 
-Od kilkunastu lat możemy zaobserwować znaczny rozwój wszystkich dziedzin techniki, a przez to technologii, które są wykorzystywane w inteligentnych budynkach. Wiele urządzeń, z których korzystamy na co dzień i które pracują niezależnie od innych urządzeń (dobrym przykładem jest ekspres do kawy), posiadają interfejsy, dzięki którym możemy podłączyć je do internetu i zdalnie nimi zarządzać. Korzystając z przykładu wcześniej wymienionego ekspresu do kawy, wracamy z pracy, wiemy o której godzinie będziemy w domu i możemy zdalnie ,,zlecić mu'' zaparzenie kawy, aby od razu po powrocie na nas czekała. A gdyby nasz dom rzeczywiście znał nasze zwyczaje? Odpowiedź jest prosta - kawa czekałaby na nas dokładnie wtedy, kiedy byśmy mieli na nią ochotę.
+Od kilkunastu lat możemy zaobserwować znaczny rozwój wszystkich dziedzin techniki, a przez to technologii, które są wykorzystywane w inteligentnych budynkach. Wiele urządzeń, z których korzystamy na co dzień i które pracują niezależnie od innych urządzeń (dobrym przykładem jest ekspres do kawy), posiadają interfejsy, dzięki którym możemy podłączyć je do internetu i zdalnie nimi zarządzać. Korzystając z przykładu wcześniej wymienionego ekspresu do kawy - wracamy z pracy, wiemy o której godzinie będziemy w domu i możemy zdalnie ,,zlecić mu'' zaparzenie kawy, aby od razu po powrocie na nas czekała. A gdyby nasz dom rzeczywiście znał nasze zwyczaje? Odpowiedź jest prosta - kawa czekałaby na nas dokładnie wtedy, kiedy byśmy mieli na nią ochotę.
 
-Inteligentne budynki, to nie tylko wygoda. To również spore oszczędności finansowe. Zwykle temperatura jest regulowana jedynie na podstawie temperatury panującej obecnie w budynku/danym pomieszczeniu. Co gdyby wziąć pod uwagę inne parametry? System inteligentnego domu zwykle zbiera dużo więcej parametrów niż tylko temperatura. Poprzez analizę tych parametrów możemy tak sterować ogrzewaniem, ale również innymi parametrami budynku, że w skali roku zaoszczędzimy na tym niekiedy niemałe pieniądze.
+Inteligentne budynki, to nie tylko wygoda. To również spore oszczędności finansowe. Zwykle działanie systemu ogrzewania i klimatyzacji jest regulowane jedynie na podstawie temperatury panującej obecnie w budynku/danym pomieszczeniu. Co gdyby wziąć pod uwagę  inne parametry? System inteligentnego domu zwykle zbiera dużo więcej parametrów niż tylko temperatura. Poprzez analizę tych parametrów możemy tak sterować ogrzewaniem, ale również innymi parametrami budynku, że w skali roku zaoszczędzimy na tym niekiedy niemałe pieniądze.
 
-Jak widać, rozwiązania z zakresu inteligentnych budynków niosą za sobą wręcz nieograniczone możliwości. Obecnie, w czasach gdzie elementy elektroniczne są szeroko dostępne, wiedza z zakresu elektroniki, automatyki i informatyki jest coraz bardziej powszechna, a największym ograniczeniem jest ludzka wyobraźnia, inteligentne domy mają świetny czas, aby stać się czymś tak powszechnym. Tak powszechnym, jak zwykłe komputery, które jeszcze kilkanaście lat temu były czymś wyjątkowym i dla wielu osób zbędnym. A dzisiaj nie potrafią bez nich żyć.
+Jak widać, rozwiązania z zakresu inteligentnych budynków niosą za sobą wręcz nieograniczone możliwości. Obecnie, w czasach gdzie elementy elektroniczne są szeroko dostępne, wiedza z zakresu elektroniki, automatyki i informatyki jest coraz bardziej powszechna, największym ograniczeniem jest ludzka wyobraźnia. Inteligentne domy mają świetny czas, aby stać się czymś tak powszechnym, jak zwykłe komputery, które jeszcze kilkanaście lat temu były czymś wyjątkowym i dla wielu osób zbędnym. A dzisiaj nie potrafimy bez nich żyć.
 \section{Cel pracy}
 % Celem projektu jest zaprojektowanie, zamodelowanie, implementacja i wdrożenie systemu zarządzania inteligentnym domem działającym w oparciu o technologie internetowe i Raspberry Pi.
 Realizację projektu można podzielić na cztery etapy:
@@ -56,7 +57,7 @@ Realizację projektu można podzielić na cztery etapy:
 \end{enumerate}
 Powyższe etapy składają się na pełny proces powstawania systemu informatycznego. Głównym celem projektu jest realizacja każdego z tych etapów, co wymaga zapoznania się ze standardami oraz technologią i ich praktycznym wykorzystaniem. Cel ten jest osiągnięty poprzez stworzenie systemu zarządzania inteligentnym domem. System ten łączy 3 obszary techniki: informatykę, elektronikę oraz automatykę. Jego interdyscyplinarność wymaga przynajmniej podstawowej wiedzy z każdego z obszarów.
 
-Metytorycznym celem pracy jest zapoznanie się z nowoczesnymi i bardzo przyszłosćiowymi rozwiązaniami, jakimi są inteligentne budynki. Dzięki stworzeniu platformy, która umożliwiała by niskim kosztem zmianę swojego mieszkania bądź domu w inteligentny budynek, możliwa by była znaczna popularyzacja inteligencji budynkowej. Niesie to za sobą znaczne korzyści - zarówno podniesienie komfortu życia, jak i oszczędności finansowe.
+Metytorycznym celem pracy jest zapoznanie się z nowoczesnymi i bardzo przyszłościowymi rozwiązaniami, jakimi są inteligentne budynki. Dzięki stworzeniu platformy, która umożliwiała by niskim kosztem zmianę swojego mieszkania bądź domu w inteligentny budynek, możliwa by była znaczna popularyzacja inteligencji budynkowej. Niesie to za sobą znaczne korzyści - zarówno podniesienie komfortu życia, jak i oszczędności finansowe.
 
 \section{Wymagania}
 Głównym wymaganiem odnośnie projektu było zaprojektowanie i implementacja systemu składającego się z czujników, elementów aktywnych, jednostki centralnej, bazy danych i aplikacji webowej, w którym wszystkie elementy będą poprawnie ze sobą współpracować.
@@ -64,7 +65,7 @@ Głównym wymaganiem odnośnie projektu było zaprojektowanie i implementacja sy
 \section{Zarys koncepcji}
 Koncepcyjnie, inteligentny dom można podzielić na dwie główne części. Są to czujniki i elementy aktywne oraz zintegrowany system zarządzania. Na najniższym poziomie znajdują się czujniki i elementy wykonawcze. Sensory odpowiadają za zbieranie danych na temat warunków panujących w budynku, np. temperatury i wilgotności powietrza, poziomu nasłonecznienia, stężenia dwutlenku i tlenku węgla, ruchu w pomieszczeniach. Na podstawie tych danych można sterować dużą ilością urządzeń oraz parametrów budynku. Przykładem może być sterowanie temperaturą ogrzewania i klimatyzacji, jasnością oświetlenia bądź stopniem otwarcia rolet. Kolejnym poziomem jest system zarządzania. Jest to kluczowy element systemu, który musi działać poprawnie i niezawodnie. Przyjmuje on dane z sensorów, steruje elementami aktywnymi systemu, obsługuje bazę danych i dostarcza interfejs użytkownika, ale przede wszystkim posiada algorytmy, przy pomocy których analizuje dane odebrane z czujników i odpowiednio używa elementów aktywnych.
 
-Jak zostało wcześniej wspomniane, do tematu inteligentnych domów można podejść na dwa sposoby - hobbystycznie i komercyjnie. Biorąc pod uwagę koszt podejścia komercyjnego oraz jego względny brak elastyczności, przy realizacji projektu przyjęte zostało podejście hobbystyczne.
+Do tematu inteligentnych domów można podejść na dwa sposoby - hobbystycznie i komercyjnie. Wiele osób, które chcą chociaż w niewielkim stopniu wprowadzić elementy inteligentnego domu w swoim miejscu zamieszkania, a posiadają przynajmniej podstawową wiedzę w zakresie informatyki, elektroniki i automatyki, decyduje się na rozwiązania hobbystyczne, które wymagają wkładu własnej pracy. Biorąc pod uwagę koszt podejścia komercyjnego oraz jego względny brak elastyczności, przy realizacji projektu przyjęte zostało podejście hobbystyczne.
 
 Jako przykład realizacji systemu zarządzania inteligentnym domem można podać system składający się z czujników, które mierzą temperaturę oraz wilgotność, symulatora elementów wykonawczych oraz systemu zarządzania. Na potrzeby pracy został zrealizowany system o takim zakresie.
 
@@ -90,13 +91,13 @@ System Fibaro opiera się na topologii sieci typu \textit{mesh}. Urządzenia ł�
 
 \chapter{Architektura systemu}
 \section{Rozmieszczenie komponentów systemu}
-Wszystkie komponenty systemu zostały rozmieszczone w taki sposób, aby możliwa była komunikacja pomiędzy wszystkimi elementami systemu. Aplikacja odpowiedzialna za komunikację z sensorami i elementami aktywnymi, aplikacja internetowa oraz baza danych umieszczone zostały na jednostce bazowej systemu inteligentnego domu.
+Wszystkie komponenty systemu zostały rozmieszczone w taki sposób, aby możliwa była komunikacja pomiędzy poszczególnymi elementami systemu. Aplikacja odpowiedzialna za komunikację z sensorami i elementami aktywnymi, aplikacja internetowa oraz baza danych umieszczone zostały na jednostce bazowej systemu inteligentnego domu.
 
 Rozdzielenie wszystkich komponentów systemu naturalnie wymusiło w projekcie zastosowanie architektury 3-warstwowej:
 \begin{enumerate}
 	\item \textbf{warstwa prezentacji} – odpowiedzialna za prezentowanie odpowiednio przetworzonych danych użytkownikowi,
 	\item \textbf{warstwa biznesowa} – na tym poziomie realizowane są wszystkie operacje biznesowe odpowiedzialne za przetwarzanie danych otrzymanych od użytkownika przed zapisaniem ich do bazy danych lub danych otrzymanych z bazy danych w celu przygotowania ich do ,,pokazania'' użytkownikowi. Są tu również przetwarzane dane przychodzące z czujników oraz wychodzące do elementów aktywnych,
-	\item \textbf{warstwa dostępu do danych} – tutaj znajduje się baza danych naszej aplikacji; na tym poziomie dane przechowywane są w sposób ,,zrozumiały'' dla bazy danych.
+	\item \textbf{warstwa dostępu do danych} – tutaj znajduje się baza danych systemu inteligentnego domu; na tym poziomie dane przechowywane są w sposób ,,zrozumiały'' dla bazy danych.
 \end{enumerate}
 Rozmieszczenie komponentów systemu w danych warstwach przedstawia poniższy diagram rozmieszczenia:
 \clearpage
@@ -109,6 +110,7 @@ Rozmieszczenie komponentów systemu w danych warstwach przedstawia poniższy dia
 \clearpage
 
 \section{Topologia systemu inteligentnego domu}
+\label{sec:topologia_systemu}
 Znaczna większość systemów inteligentnych domów opiera się na topologii gwiazdy. ,,Ramionami'' gwiazdy są sensory i elementy aktywne, natomiast elementem łączącym te ramiona jest system zarządzania. Zastosowanie takiej topologii ma bardzo dużą zaletę - jeśli któryś z sensorów bądź elementów aktywnych przestanie działać, to nie ma to wpływu na działanie pozostałych elementów systemu. Ponadto, dzięki zastosowaniu topologii gwiazdy, system jest bardziej wydajny. Elementy peryferyjne mają ograniczoną moc obliczeniową, a przez to ograniczoną ilość zadań, które mogą wykonać. Większa ilość zadań spoczywających na nich, wymusiłaby zwiększenie mocy obliczeniowej, co automatycznie zwiększyłoby również koszt systemu, a jest to wysoce nieporządane zjawisko. Zamiast tego część zadań należy przydzielić jednostce bazowej, która powinna być najbardziej wydajnym elementem system.
 
 
@@ -123,7 +125,11 @@ Niestety, z topologią gwiazdy wiąże się spore niebezpieczeństwo, ponieważ 
 
 \section{Komunikacja pomiędzy elementami systemu} % (fold)
 \label{sec:komunikacja_pomi_dzy_elementami_systemu}
-Aplikacja internetowa oraz baza danych umieszczone są na tym samym serwerze. Back-end aplikacji internetowej jest usługą sieciową zrealizowaną w stylu architektury oprogramowania typu REST, która udostępnia interfejsy komunikacyjne dla warstwy prezentacji aplikacji webowej oraz innych aplikacji, np. aplikacji mobilnej na platformę Android, przy pomocy formatu JSON.
+Interfejs komunikacji z elementami inteligentnego domu, aplikacja internetowa oraz baza danych umieszczone są na tym samym serwerze. Całość buduje system zarządzania inteligentnym domem.
+
+Komunikacja pomiędzy elementami inteligentnego domu jest komunikacją bezprzewodową, działającą w topologii opisanej w punkcie \ref{sec:topologia_systemu}. Dane pobrane z sensorów zapisywane są, po odrzuceniu błędów grubych, bezpośrednio do bazy danych. Zmiana stanu elementu aktywnego następuje po pojawieniu się odpowiedniego wpisu w bazie danych w tabeli przechowującej zadania. Jak widać, komunikacja w tej części systemu opiera się na bezprzewodowych technologiach sieciowych oraz na bazie danych.
+
+Back-end aplikacji internetowej jest usługą sieciową zrealizowaną w stylu architektury oprogramowania typu REST, która udostępnia interfejsy komunikacyjne dla warstwy prezentacji aplikacji webowej oraz innych aplikacji, np. aplikacji mobilnej na platformę Android, przy pomocy formatu JSON.
 
 Przykładowe zapytanie zwracające podstawowe dane na temat systemu ma następujący przebieg:
 \begin{enumerate}
@@ -136,24 +142,34 @@ Główną zaletą podejścia RESTowego jest ogromna skalowalność aplikacji ora
 % section komunikacja_pomi_dzy_elementami_systemu (end)
 
 \chapter{Specyfikacja systemu}
-\section{API serwera}
-Serwer powinien być rozumiany jako główny element logiki biznesowej systemu. Jest on elementem, który z zewnątrz jest czarną skrzynką, z której korzystają klienci aplikacji androidowej i webowej. Komunikuje się on z innymi systemami w sposób opisany w punkcie \ref{sec:komunikacja_pomi_dzy_elementami_systemu}.
+\section{Aplikacja inteligentnego domu} % (fold)
+\label{sec:specyfikacja_aplikacja_inteligentnego_domu}
+Aplikacja inteligentnego domu jest odpowiedzialna za komunikację z czujnikami i elementami aktywnymi oraz bazą danych. Jest ona \emph{de facto} interfejsem do komunikacji pomiędzy elementami inteligentnego domu, nie posiada algorytmów sterowania, które znajdują się w webowej części serwera.
+Aplikacja ta musi być napisana w języku wspierającym obsługę GPIO (\emph{ang. General Purpose Input Output}) znajdującym się na Raspberry Pi. Językami, które posiadają odpowiednie biblioteki są C++ oraz Python.
+% section  (end)
 
-Poza komunikacją z systemami zewnętrznymi, serwer komunikuje się przede wszystkim bezpośrednio z bazą danych. Jest on miejscem, w którym przeprowadzane są wszystkie operacje pobierania, modyfikowania oraz zapisywania danych do bazy.
+\section{API serwera}
+Serwer powinien być rozumiany jako główny element logiki biznesowej systemu. Jest on elementem, który z zewnątrz jest czarną skrzynką, z której korzystają klienci aplikacji webowej. Komunikuje się on z innymi systemami w sposób opisany w punkcie \ref{sec:komunikacja_pomi_dzy_elementami_systemu}.
+
+Poza komunikacją z systemami zewnętrznymi, serwer komunikuje się przede wszystkim bezpośrednio z bazą danych. Jest on miejscem, w którym przeprowadzane są wszystkie operacje pobierania, modyfikowania oraz zapisywania danych do bazy. Przed zapisem bądź po pobraniu danych z bazy są one odpowiednio przetwarzane. Aby zachować poprawność danych, niektóre pola muszą mieć walidację. Jest to realizowane na poziomie bazy danych - przykładowo, jeśli pole, które nie może być puste ma wartość \emph{null}, to baza danych nie pozwoli nam na zapis.
 
 \section{Aplikacja internetowa}
-W tym punkcie jako aplikacje internetową należy rozumieć część aplikacji webowej nazywaną ,,front-end’em'', czyli części służącej do komunikacji z użytkownikiem,przez przeglądarkę internetową.
+Jako aplikacje internetową należy rozumieć część aplikacji webowej nazywaną ,,front-end’em'', czyli części służącej do komunikacji z użytkownikiem,przez przeglądarkę internetową.
 
-Aplikacja webowa została napisana za pomocą framework’a AngularJS. Angular ułatwia podział aplikacji zgodnie ze schematem Model-View-Contoller.
+Aplikacja internetowa powinna być wykonana w technologii SPA (\emph{ang. Single Page Application}). Jest to technologia, w której wszystkie elementy strony internetowej, czyli HTML, CSS i JavaScript są pobierane dynamicznie i dołączane do aktualnie wyświetlanej strony w razie potrzeby, najczęsciej po określonych akcjach użytkownika. Strona nie przeładowuje się na żadnym etapie, ponieważ wykorzystuje serwisy do wysłania zapytań do API serwera. Serwisy są asynchroniczne i wykonują się w osobnym wątku. Dzięki takiemu rozwiązaniu użytkownik ma wrażenie ze strona ładuje się natychmiastowo, ponieważ widać jej część, a tak naprawdę większość komponentów czeka na dane zwrócone z API serwera. Przykładowo, po zalogowaniu do aplikacji wykorzystywana jest maszyna stanów adresów, dzięki czemu możliwe jest ładowanie tylko części strony pod paskiem nawigacyjnym, a pasek nawigacyjny zawiera przyciski ładujące odpowiedni widok.
 
-Po zalogowaniu do aplikacji wykorzystujemy maszyne stanów adresów, dzięki czemu możliwe jest ładowanie tylko części strony pod paskiem nawigacyjnym, a pasek nawigacyjny zawiera przyciski ładujące odpowiedni widok.
+Zastosowaniu takiego rozwiązania przenosi prawie całość obliczeń odpowiedzialnych za wyświetlanie widoków na przeglądarkę internetową, czyli stronę użytkownika. Dzięki temu można odciążyć serwer w przypadku, kiedy nie należy on do najwydajniejszych. W efekcie dane są dostarczane szybko, ich wyświetlanie jest płynne i użytkownik nie musi czekać na przeładowanie strony.
 
-Angular wykorzystuje serwisy do wysłania zapytań do API serwera. Serwisy są asynchroniczne i wykonują się w osobnym wątku. Dzięki takiemu rozwiązaniu użytkownik ma wrażenie ze strona ładuje się natychmiastowo, ponieważ widać jej część, a tak naprawdę większość komponentów czeka na dane zwrócone z API serwera.
-
-Aplikacja internetowa jest w pełni przetłumaczona na język polski oraz angielski. Strona wyświetla się w danym języku na podstawie ustawień przeglądarki.
+Frameworkami JavaScriptu, które realizują założenia SPA, są AngularJS, Ember.js oraz Meteor.js.
 
 \chapter{Wybrane technologie}
 \section{Hardware}
+Pod względem sprzętowym, system inteligentnego domu można podzielić na dwie części: elementy peryferyjne oraz jednostkę bazową. Każda z tych części cechuje się innymi wymaganiami odnośnie mocy obliczeniowej, dostępnej pamięci, rozmiarów bądź poboru prądu. Z tego powodu w projekcie zostały wykorzystane dwie platformy - Arduino oraz Raspberry Pi.
+\subsection{Arduino} % (fold)
+\label{ssub:arduino}
+
+% subsubsection arduino (end)
+
 \section{Software}
 \subsection{Aplikacja internetowa}
 Serwis internetowy wykonany został w oparciu o następujące technologie:
@@ -167,8 +183,8 @@ Ponadto wykorzystane zostały następujące elementy:
 	\item \textbf{Slim} – język oparty na szablonach (ang. template language), którego celem jest maksymalna redukcja składni HTML’owej poprzez usunięcie np. tagów zamykających. W efekcie otrzymujemy bardzo czytelny kod, oparty na wcięciach.
 \end{itemize}
 
-\subsection{Aplikacja serwerowa} % (fold)
-\label{sub:aplikacja_serwerowa}
+\subsection{Aplikacja inteligentnego domu} % (fold)
+\label{sub:aplikacja_inteligentnego_domu}
 
 % subsection aplikacja_serwerowa (end)
 
@@ -282,8 +298,9 @@ Jako system bazodanowy wykorzystany został MySQL w wersji 5.6. Niewątpliwymi z
 % \end{figure}
 \chapter{Podsumowanie}
 
+\renewcommand\bibname{Literatura}
 \begin{thebibliography}{inteligencja}
-	\addcontentsline{toc}{chapter}{Bibliografia}
+	\addcontentsline{toc}{chapter}{Literatura}
 	
 	\bibitem{rails guide}
 	\emph{Ruby on Rails Guides}, dostępne pod adresem: \url{http://guides.rubyonrails.org/},\\ aktualne na dzień 14.06.2015r.
