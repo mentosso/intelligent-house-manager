@@ -47,7 +47,6 @@ Inteligentne budynki, to nie tylko wygoda. To również spore oszczędności fin
 
 Jak widać, rozwiązania z zakresu inteligentnych budynków niosą za sobą wręcz nieograniczone możliwości. Obecnie, w czasach gdzie elementy elektroniczne są szeroko dostępne, wiedza z zakresu elektroniki, automatyki i informatyki jest coraz bardziej powszechna, największym ograniczeniem jest ludzka wyobraźnia. Inteligentne domy mają świetny czas, aby stać się czymś tak powszechnym, jak zwykłe komputery, które jeszcze kilkanaście lat temu były czymś wyjątkowym i dla wielu osób zbędnym. A dzisiaj nie potrafimy bez nich żyć.
 \section{Cel pracy}
-% Celem projektu jest zaprojektowanie, zamodelowanie, implementacja i wdrożenie systemu zarządzania inteligentnym domem działającym w oparciu o technologie internetowe i Raspberry Pi.
 Realizację projektu można podzielić na cztery etapy:
 \begin{enumerate}
 	\item projektowanie,
@@ -109,6 +108,16 @@ Rozmieszczenie komponentów systemu w danych warstwach przedstawia poniższy dia
 \end{figure}
 \clearpage
 
+\section{Diagram klas} % (fold)
+\label{sec:diagram_klas}
+Poprzez analizę wymagań systemu oraz przypadków użycia, powstał następujący diagram klas, który równocześnie jest odzwierciedleniem schematu bazy danych.
+\begin{figure}[h]
+\centering
+\includegraphics[width=\linewidth]{./erd}
+\caption{Diagram klas systemu.}
+\label{fig:diagram_encje}
+\end{figure}
+
 \section{Topologia systemu inteligentnego domu}
 \label{sec:topologia_systemu}
 Znaczna większość systemów inteligentnych domów opiera się na topologii gwiazdy. ,,Ramionami'' gwiazdy są sensory i elementy aktywne, natomiast elementem łączącym te ramiona jest system zarządzania. Zastosowanie takiej topologii ma bardzo dużą zaletę - jeśli któryś z sensorów bądź elementów aktywnych przestanie działać, to nie ma to wpływu na działanie pozostałych elementów systemu. Ponadto, dzięki zastosowaniu topologii gwiazdy, system jest bardziej wydajny. Elementy peryferyjne mają ograniczoną moc obliczeniową, a przez to ograniczoną ilość zadań, które mogą wykonać. Większa ilość zadań spoczywających na nich, wymusiłaby zwiększenie mocy obliczeniowej, co automatycznie zwiększyłoby również koszt systemu, a jest to wysoce nieporządane zjawisko. Zamiast tego część zadań należy przydzielić jednostce bazowej, która powinna być najbardziej wydajnym elementem system.
@@ -165,10 +174,38 @@ Frameworkami JavaScriptu, które realizują założenia SPA, są AngularJS, Embe
 \chapter{Wybrane technologie}
 \section{Hardware}
 Pod względem sprzętowym, system inteligentnego domu można podzielić na dwie części: elementy peryferyjne oraz jednostkę bazową. Każda z tych części cechuje się innymi wymaganiami odnośnie mocy obliczeniowej, dostępnej pamięci, rozmiarów bądź poboru prądu. Z tego powodu w projekcie zostały wykorzystane dwie platformy - Arduino oraz Raspberry Pi.
-\subsection{Arduino} % (fold)
-\label{ssub:arduino}
+\subsection{Sensory i elementy sterujące} % (fold)
+\label{sub:sensory_i_elementy_sterujace}
+Elementy peryferyjne inteligentnego domu mają kilka głównych wymagań:
+\begin{itemize}
+	\item nieduża moc obliczeniowa,
+	\item niewielki rozmiar,
+	\item małe zapotrzebowanie na prąd,
+	\item niska cena.
+\end{itemize}
+W wyniku analizy owych wymagań oraz przeglądu dostępnych rozwiązań, do realizacji czujników i elementów aktywnych zdecydowano się wykorzystać urządznie Arduino Pro Mini 3.3V.
 
-% subsubsection arduino (end)
+Urządzenie to jest oparte na mikrokontrolerze ATmega328 i działa pod napięciem 3.3V. Zegar taktowany jest z szybkością 8MHz. Mikrokontroler ten posiada 32kB pamięci flash, 2kB pamięci SRAM oraz 1kB pamięci EEPROM. Jego wymiary to 17.7mm x 33mm, więc jest wystarczająco małym urządzeniem. Niewielka wydajność oraz zasilanie napięciem 3.3V skutkuje małym zapotrzebowaniem na prąd. Całość parametrów przekłada się również na cenę - obecnie Arduino Pro Mini można kupić już za 10zł.
+% subsection sensory_i_elementy_sterujace (end)
+
+\subsection{Jednostka bazowa} % (fold)
+\label{sub:jednostka_bazowa}
+Jednostka bazowa powinna nie posiada tylu wymagań, co urządzenia peryferyjne. Nie będzie ona zasilana bateriami, więc zużycie prądu nie gra tu większej roli. Jednostka bazowa jest tylko jedna, więc  rozmiar jest w tym przypadku zależny wymogiem jedynie estetycznym. Jako, że projekt ma być dostępny dla większej ilości ludzi, kwestia ceny ma tutaj sporą rolę i oczywiście komputer zarządzający naszym systemem nie powinien być drogi. Wobec jednostki bazowej jest jedno podstawowe wymaganie - odpowiednia wydajność. Oczywiście, wydajność ta musi być dostosowana do rozmiarów systemu.
+
+Urządzeniami, które najbardziej nadają się do pełnienia roli jednostki bazowej są mikrokomputery. Przykładowymi rozwiązaniami są Raspberry Pi oraz jego klony, czyli Banana Pi i Orange Pi. Różnią się one od siebie przede wszystkim parametrami wydajnościowymi. Każdy z nich ma jednak wystarczającą wydajność do pełnienia roli jednostki bazowej. Jako, że urządzenie Raspberry Pi ma największe wsparcie społeczności, co jest ważnym elementem przy realizacji tego typu projektu, zostało ono wybrane do realizacji funkcji jednostki bazowej systemu inteligentnego domu.
+
+Raspberry Pi w wersji 2 ma następujące parametry:
+\begin{itemize}
+	\item Procesor czterordzeniowy ARM Cortex-A7, taktowany zegarem o częstotliwości 900 MHz,
+	\item 1GB pamięci RAM (wspóldzielonej z GPU),
+	\item 40 portów GPIO,
+	\item 4 porty USB 2.0,
+	\item port Ethernet 10/100,
+	\item system operacyjny Windows 10 IoT, Debian GNU/Linux, Fedora, Arch Linux lub FreeBSD.
+\end{itemize}
+
+Średnia cena Raspberry Pi 2 wynosi 175zł. Dodatkowo, potrzebny jest zasilacz oraz karta MicroSD, co nieco zwiększa koszt całego urządzenia, lecz nie powinien przekroczyć on 200zł.
+% subsection jednostka_bazowa (end)
 
 \section{Software}
 \subsection{Aplikacja internetowa}
@@ -191,111 +228,458 @@ Ponadto wykorzystane zostały następujące elementy:
 \subsection{Baza danych}
 Jako system bazodanowy wykorzystany został MySQL w wersji 5.6. Niewątpliwymi zaletami tego systemu jest to, że posiada on wysoki stopień niezawodności, jest darmowy oraz powszechnie dostępny i wspierany.
 
-\chapter{Implementacja}
-\chapter{Testy}
-\section{Aplikacja internetowa}
-\subsection{Testy jednostkowe}
-% Do testów jednostkowych dla aplikacji webowej użyliśmy biblioteki RSpec, służącej do testowania kodu Rubiego, ze wsparciem dla frameworka Rails. Wybraliśmy tą bibliotekę, ponieważ wspiera ona idee Model-View-Controller, w oparciu o którą powstała nasza aplikacja. Dużą wygodą jest również automatyczna konfiguracja środowiska testowego, która polega m. in.  na osobnej, testowej bazie danych, która jest tworzona na początku wykonywania testów i czyszczona po zakończeniu każdego przypadku testowege.
 
-% RSpec posiada bardzo intuicyjną składnie, przyjazna użytkownikowi naszym zdaniem. Testy podzielone są na 3 poziomową strukturę, każdy poziom zaczyna się słowem kluczowym:
-% \begin{enumerate}
-% 	\item ,,describe'' – tu definiujemy jaką funkcje/klasę/moduł ma sprawdzać dany zbiór testów,
-% 	\item ,,context'' – to miejsce służy do określenia warunków testu,
-% 	\item ,,it'' – mówi nam jak powinien się zachować testowany moduł.
-% \end{enumerate}
+\chapter{Implementacja} % (fold)
+\label{cha:implementacja}
+\section{Back-end} % (fold)
+\label{sec:back_end}
+Backend aplikacji internetowej jest reprezentowany przez \emph{Model} i~\emph{Controller} we wzorcu \emph{Model-View-Controller}. Aby aplikacja była napisana zgodnie z~dobrymi praktykami programowania, część logiki znajdującej się w~modelach i~kontrolerach, która nie ma cech ww., zostaje przeniesiona do serwisów. Wszystkie kluczowe fragmenty kodu zostaną przedstawione w~kolejnych sekcjach.
+\subsection{Modele} % (fold)
+\label{sub:modele}
+Na obecnym etapie rozwoju aplikacji w~modelach nie ma żadnej dodatkowej logiki. Są tam jedynie opisane relacje z~innymi modelami. Framework \emph{Rails} odpowiednio interreture te informacje, aby pobierać odpowiednie relacje podczas operacji na modelach. Przykładowy model pokazany jest na listingu \ref{lst:sensor}.
+\begin{lstlisting}[caption={Model sensora.},label=lst:sensor]
+class Sensor < ActiveRecord::Base
+  belongs_to :room
+end
+\end{lstlisting}
+Jak widać na powyższym listingu, \emph{Sensor} \textbf{należy do} \emph{Pokoju}.
+% subsection modele (end)
+\subsection{Logowanie} % (fold)
+\label{sub:logowanie}
+Logowanie w~aplikacji pełni rolę autentykacji użytkownika. Po zalogowaniu ma on pełny dostęp do wszystkich funkcjonalności systemu. Ponadtko, użytkownik nie jest w~relacji z~żadną inną tabelą. Proces rejestracji i~logowania jest obsługiwany przez dodatek (\emph{gem}) Devise. Jeśli użytkownik nie jest zalogowany, to automatycznie zostaje przekierowany na stronę logowania, gdzie może również zarejestrować nowe konto. Jeśli natomiast przeglądarka zapamiętała sesję, to dostęp do aplikacji nie wymaga ponownego logowania.
+% subsection logowanie (end)
+\subsection{Pokoje i~sensory} % (fold)
+\label{sub:pokoje_i_sensory}
+Aby system działał poprawnie, musimy do niego dodać elementy, które zbierają dane. API serwera umożliwia takie akcje poprzez \emph{RoomsController} oraz \emph{SensorsController}. Oba kontrolery są zgodne ze standardem \emph{CRUD} (ang. \emph{Create-Read-Update-Delete}). Dzięki temu Rails'y automatycznie mapują adres na akcję w~kontrolerze. Na listingu \ref{lst:rooms} przedstawiona jest klasa \emph{RoomsController} razem z~odnośnikami oraz rodzajem zapytania HTTP, które prowadzi do danej akcji. Klasa \emph{SensorsController} wygląda analogicznie.
+\begin{lstlisting}[caption={RoomsController.},label=lst:rooms]
+class RoomsController < ApplicationController
+  before_action :set_room, only: [:show, :edit, :update, :destroy]
 
-% Przykładowy pojedynczy przypadek testowy:
+  # GET /rooms
+  # GET /rooms.json
+  def index
+    render json: Room.all
+  end
 
-% \begin{lstlisting}[language=Ruby, caption={RSpec test jednostkowy.}]
-% RSpec.describe TripsController, :controller do #
-% Describe'POST #create' do
-% context 'with valid attributes' do
-% it 'creates the trip' do
-% login_user
-% post :create, trip: attributes_for(:trip_with_path), format: :json
-% expect(Trip.count).to eq(1)
-% end
-% end
-% end
-% end
-% \end{lstlisting}
+  # GET /rooms/1
+  # GET /rooms/1.json
+  def show
+  end
 
-% Powyższy test ma za zadanie sprawdzić czy dane wysłane w odpowiednim formacie zapytaniem http post, przekazane do funkcji ,,create'' klasy ,,TripsController'' stworzą w bazie danych nowy rekord w tabeli Trip. 
+  # GET /rooms/new
+  def new
+    @room = Room.new
+  end
 
-% Dla ułatwienia wprowadzania atrybutów do testowanych metod lub dodawania rekordów do bazy danych nie wykorzystując napisanych przez siebie metod posłużyliśmy się biblioteką ,,FactoryGirl'', która implementuje wzorzec projektowy fabryki. Definicja obiektu jest bardzo prosta:
+  # GET /rooms/1/edit
+  def edit
+  end
 
-% \begin{lstlisting}[language=Ruby, caption={Definicja FactoryGirl.}]
-% FactoryGirl.define do 
-% factory :full_trip, class: Trip do
-% distance 100
-% avg_rpm 2500
-% avg_speed 94
-% avg_fuel 8.9
-% date '2015-05-14T21:23:11.510Z'
-% mark 5.0
-% user_id 1
-% beginning 'Start'
-% finish 'Finish'
-% challenge_id nil
-% engine_type_id 1
-% engine_displacement_id 1
-% end
-% end
-% \end{lstlisting}
+  # POST /rooms
+  # POST /rooms.json
+  def create
+    @room = Room.new(room_params)
 
-% Poniżej znajduje się użycie metody "FactoryGirl.create'', która tworzy obiekt w bazie danych. Ten przykład ilustruje również strukturę zbioru testów dla pojedynczej metody:
+    respond_to do |format|
+      if @room.save
+        format.html { redirect_to @room, notice: 'Room was successfully created.' }
+        format.json { render :show, status: :created, location: @room }
+      else
+        format.html { render :new }
+        format.json { render json: @room.errors, status: :unprocessable_entity }
+      end
+    end
+  end
 
-% \begin{lstlisting}[language=Ruby, caption={Użycie FactoryGirl.}]
-% describe 'GET #mytrips' do
-% context 'with valid attributes' do
-% let!(:login) { login_user }
-% let(:current_user_id) { login.id }
-% it 'renders all user\'s trips as json' do
-% FactoryGirl.create(:engine_displacement)
-% FactoryGirl.create(:engine_type)
-% FactoryGirl.create(:fuel_consumption)
-% FactoryGirl.create(:full_trip, user_id: current_user_id)
-% get :mytrips, format: :json
-% expect(response).to be_success
-% json = JSON.parse(response.body)
-% expect(json).not_to be_empty
-% expect(json[0].length).to eq(20)
-% end
-% it 'renders empty array when user has no trips' do
-% get :mytrips, format: :json
-% expect(response).to be_success
-% json = JSON.parse(response.body)
-% expect(json).to be_empty
-% end
-% end
+  # PATCH/PUT /rooms/1
+  # PATCH/PUT /rooms/1.json
+  def update
+    respond_to do |format|
+      if @room.update(room_params)
+        format.html { redirect_to @room, notice: 'Room was successfully updated.' }
+        format.json { render :show, status: :ok, location: @room }
+      else
+        format.html { render :edit }
+        format.json { render json: @room.errors, status: :unprocessable_entity }
+      end
+    end
+  end
 
-% context 'with user not logged in' do
-% it 'redirects to login page' do
-% FactoryGirl.create(:engine_displacement)
-% FactoryGirl.create(:engine_type)
-% FactoryGirl.create(:full_trip)
-% get :mytrips, format: :json
-% expect(response).to have_http_status(401)
-% end
-% end
-% end
-% \end{lstlisting}
+  # DELETE /rooms/1
+  # DELETE /rooms/1.json
+  def destroy
+    @room.destroy
+    respond_to do |format|
+      format.html { redirect_to rooms_url, notice: 'Room was successfully destroyed.' }
+      format.json { head :no_content }
+    end
+  end
 
-% Stworzyliśmy 19 testów jednostkowych. Badaliśmy pokrycie kodu aplikacji testami narzędziem Rcov. Tą analizę uruchamialiśmy po każdym commicie do repozytorium, dlatego wiemy jak się to kształtowało od moment skonfigurowania Rcov w Jenkinsie:
-% \begin{figure}[h]
-% 	\centering
-% 	%\includegraphics[width=0.8\linewidth]{}
-% 	\caption{Wykres pokrycia kodu.}
-% 	\label{fig:testy}
-% \end{figure}
+  private
 
-% Ostatecznie pokrycie kodu źródłowego testami jednostkowymi wynosi około 75\%. Rcov pokazuje również dokładnie, które linie kodu są testowane:
-% \begin{figure}[h]
-% 	\centering
-% 	%\includegraphics[width=0.9\linewidth]{}
-% 	\caption{Raport Rcov dla pliku trips\_controller.rb.}
-% 	\label{fig:raport}
-% \end{figure}
+  # Use callbacks to share common setup or constraints between actions.
+  def set_room
+    @room = Room.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def room_params
+    params.permit(:name, :sqm)
+  end
+end
+\end{lstlisting}
+% subsection pokoje_i_sensory (end)
+\subsection{Dashboard użytkownika} % (fold)
+\label{sub:dashboard_uzytkownika}
+Dashboard użytkownika jest miejscem, gdzie wyświetlane są najważniejsze informacje. z~jego poziomu możemy zobaczyć średnią temperaturę oraz wilgotność panujące w~mieszkaniu, ilość aktywnych sensorów, ostatnie wydarzenia w~systemie (np. awaria sensora) oraz wykres temperatury dla ostatniej godziny. Dane te są dostarczane przez \emph{HomeController}.
+\begin{lstlisting}[caption={Metoda dashboard odpowiedzialna za generowanie danych dla dashboardu.},label=lst:dashboard]
+def dashboard
+  avg_temp = TemperatureData.last(100).to_a.sum(&:value) / 100.to_f
+  avg_humid = HumidityData.last(100).to_a.sum(&:value) / 100.to_f
+  sensors = Sensor.where(state: true).count
+  res = {
+    avg_temp: avg_temp,
+    avg_humid: avg_humid,
+    sensors: sensors
+  }
+  render json: res
+end  
+\end{lstlisting}
+% subsection dashboard_uzytkownika (end)
+
+\subsection{Wykresy} % (fold)
+\label{sub:wykresy}
+Wykorzystanie systemu przewiduje prezentowanie danych na wykresach. Na listingu \ref{lst:chart_temp} przedstawiony jest kod metody kontrolera, który zwraca tablicę z~temperaturami zebranymi przez każdy z~czujników na przestrzeni ostatniej godziny, tablicę wartości czasowych oraz numery sensorów.
+\begin{lstlisting}[caption={Metoda odpowiedzialna za generowanie danych dla wykresów.},label=lst:chart_temp]
+def temp_chart
+  service = ChartDataService.new(Time.zone.now, 'temperature')
+  time = service.create_labels
+  data = service.retrive_data
+  render json: [data, time, Sensor.where(state: true).pluck(:number)]
+end
+\end{lstlisting}
+
+Jak widać, kontroler ten korzysta z~serwisu \emph{ChartDataService}, który generuje niebędne dane. Serwis ten jest zbudowany w~taki sposób, że typ danych jest dla niego przezroczysty (podajemy go jako parametr), przez co serwis może pobrane dane przetwarzać identycznie dla różnych typów. Na listingu \ref{lst:chart_service} przedstawiona jest klasa odpowiedzialna za pobieranie danych z~bazy danych, przetworzenie ich oraz zwrócenie tablicy z~danymi, które są przekazywane do kontrolera.
+\begin{lstlisting}[caption={Klasa ChartDataService.},label=lst:chart_service]
+class ChartDataService
+  def initialize(time, type)
+    @time = Time.new(time.year, time.month, time.day,
+                     time.hour, time.min, 0, Time.zone.now.strftime('%:z'))
+    @arr_index = 0
+    @type = type
+  end
+
+  def retrive_data
+    data = []
+    Sensor.where(state: true).each do |sensor|
+      sensor_data = retrive_sensor_type_data(sensor)
+      data << get_data_for_each_minute(sensor, sensor_data)
+    end
+    data
+  end
+
+  def retrive_sensor_type_data(sensor)
+    if @type == 'temperature'
+      return TemperatureData.where(sensor_id: sensor.id,
+                                   created_at: (@time - 1.hour..@time))
+    elsif @type == 'humidity'
+      return HumidityData.where(sensor_id: sensor.id,
+                                created_at: (@time - 1.hour..@time))
+    end
+  end
+
+  def get_data_for_each_minute(sensor, sensor_data)
+    data = []
+    (0..59).reverse_each do |amount|
+      data_minute = get_array_from_minute(amount, sensor_data, sensor, @time)
+      if data_minute.present?
+        data << (data_minute.sum(&:value) / data_minute.length.to_f).round(2)
+      else
+        data << []
+      end
+    end
+    data
+  end
+
+  def create_labels
+    arr = []
+    (0..59).reverse_each do |amount|
+      arr << (@time - amount.minute).strftime('%R')
+    end
+    arr
+  end
+
+  def get_array_from_minute(amount, arr, sensor, time)
+    return if arr.nil? || arr[@arr_index..-1].nil?
+    data = []
+    arr[@arr_index..-1].each_with_index do |val, index|
+      if val.created_at > time - amount.minute
+        @arr_index = index
+        break
+      end
+      data << val if val.sensor_id == sensor.id &&
+                     val.created_at <= time - amount.minute &&
+                     val.created_at > time - amount.minute - 1.minute
+    end
+    data
+  end
+end
+\end{lstlisting}
+% subsection wykresy (end)
+\subsection{Zadania wykonywane w~tle} % (fold)
+\label{sub:zadania_wykonywane_w_tle}
+Poza standardowymi akcjami wykonywanymi na rządzanie użytkownika, w~systemie zaimplementowana jest dodatkowa akcja. Jest to zadanie wykonywane okresowo oraz ,,w tle''. Do osiągnięcia takiego rezultatu wykorzystywany jest gem \emph{Clockwork}, który odpowiedzialny jest za okresowe wywoływanie zadań. Samo zadanie natomiast jest stworzone przy pomocy mechanizmu znajdującego się w Ruby on Rails - \emph{ActiveJob}. Wywołanie zadania przedstawione jest na listingu \ref{lst:clockwork}, natomiast metoda wywoływana znajduje się na listingu \ref{lst:sensor_job}.
+\begin{lstlisting}[caption={Konfiguracja gemu Clockwork.},label=lst:clockwork]
+require 'clockwork'
+require './config/boot'
+require './config/environment'
+
+module Clockwork
+  handler do |job, time|
+    puts "Running #{job}, at #{time}"
+  end
+
+  every(1.minute, 'check sensor statuses') { CheckSensorStateJob.perform_now }
+end
+\end{lstlisting}
+
+Job ma za zadanie sprawdzać, czy w~ciągu ostatnich 5 minut sensor zarejestrował jakąś wartość. Jeśli tak się nie stało, to ustawiany jest jego stan na \emph{false} oraz dodawana jest notyfikacja do osobnej tabeli. Jeśli sensor był nieaktywny, a~ostatni pomiar jest młodszy niż 5 minut, to stan sensora jest aktualizowany i~ponownie dodawana jest notyfikacja o~przywróceniu sensora do działania.
+
+\begin{lstlisting}[caption={Job uaktualniający stan sensora.},label=lst:sensor_job]
+class CheckSensorStateJob < ActiveJob::Base
+  queue_as :default
+
+  def perform
+    Sensor.all.each do |sensor|
+      val = TemperatureData.where(sensor_id: sensor.id).last
+      if val.created_at < Time.zone.now - 5.minutes && sensor.state == true
+        Notification.create(message: "Sensor #{sensor.number} not responding",
+                            message_type: 'error')
+        sensor.update_attributes(state: false)
+      elsif val.created_at > Time.zone.now - 5.minutes && sensor.state == false
+        Notification.create(message: "Sensor #{sensor.number} responding",
+                            message_type: 'info')
+        sensor.update_attributes(state: true)
+      end
+    end
+  end
+end
+\end{lstlisting}
+% subsection zadania_wykonywane_w_tle (end)
+% section back_end (end)
+\section{Front-end} % (fold)
+\label{sec:front_end}
+Front-end aplikacji internetowej składa się z~3 najważniejszych elementów: kontrolerów, serwisów i~widoków. Serwisy komunikują się z~backend'em i~przekazują dane do kontrolerów, które te dane przetwarzają i~przekazują do widoków.
+\subsection{Logowanie} % (fold)
+\label{sub:logowanie}
+Aby po stronie front-endu sprawdzić, czy użytkownik jest zalogowany, pierwszą akcją kontrolera jest wysłanie odpowiedniego zapytania do backendu. Jeśli odpowiedź jest poprawna, to użytkownik może korzystać z zasobów serwisu, natomiast jeśli otrzymana odpowiedź ma status HTTP 401 Unauthorized, to wymagane jest zalogowanie użytkownika. w~takiej sytuacji jest on automatycznie przekierowywany na stronę logowania.
+\begin{lstlisting}[caption={Sprawdzenie czy użytkownik jest zalogowany.}, label=lst:front_login]
+Auth.currentUser().then((user) ->
+      # User was logged in, or Devise returned
+      # previously authenticated session.
+      $scope.user = user
+    (error) ->
+      $location.path('/login')
+    )
+\end{lstlisting}
+% subsection logowanie (end)
+\subsection{Dashboard} % (fold)
+\label{sub:dashboard}
+Do pobrania danych wyświetlanych w~dashboardzie użytkownika użyty jest serwis przedstawiony na listingu \ref{lst:dashboard_service}. Serwis ten definiuje metody, które wysyłają zapytanie HTTP GET do aplikacji Railsowej, a~następnie zwraca odebrane dane.
+\begin{lstlisting}[caption={Serwis dashboardu.},label=lst:dashboard_service]
+angular.module('HouseApp').factory 'Home', ['$http', ($http) ->
+  dashboard: () ->
+    $http.get('/home/dashboard.json')
+  temp_chart: () ->
+    $http.get('home/temp_chart.json')
+]
+\end{lstlisting}
+
+Samo wywołanie metod serwisu odbywa się w~kontrolerze. Zdefiniowane są w nim metody \emph{dashboard(), temp\_chart()} oraz \emph{fetch\_notifications()}, które odpowiedzialne są za wywołanie odpowiednich serwisów i~przypisanie otrzymanych danych do odpowiednich zmiennych znajdujących się w kontrolerze. Fragment kodu kontrolera przedstawiony jest na listingu \ref{lst:dashboard_ctrl}.
+\begin{lstlisting}[caption={HomeController.},label=lst:dashboard_ctrl]
+angular.module 'HouseApp'
+  .controller 'HomeCtrl', ['$http', '$scope', '$location', '$interval', 'Auth', 'Home', 'Notification',
+  ($http, $scope, $location, $interval, Auth, Home, Notification)->
+  
+    $scope.avg = []
+    $scope.dashboard = () ->
+      Home.dashboard().then((data) ->
+        $scope.avg = data.data
+      )
+    $scope.dashboard()
+
+    $scope.labels = []
+    $scope.series = []
+    $scope.data = [
+      [],
+      []
+    ]
+    $scope.options = {
+      pointHitDetectionRadius : 5
+    }
+
+    $scope.temp_chart = () ->
+      Home.temp_chart().then((data) ->
+        $scope.data = data.data[0]
+        $scope.labels = data.data[1]
+        $scope.series = data.data[2]
+      )
+    $scope.temp_chart()
+
+    $scope.fetch_notifications = () ->
+      Notification.dashboard().then((data) ->
+        $scope.notifications = data.data
+      )
+    $scope.fetch_notifications()
+  ]
+\end{lstlisting}
+
+Ponadto, dzięki mechanizmowi \emph{two-way binding} znajdującemu się w AngularJS, wyświetlone dane możemy odświeżyć na stronie bez jej przeładowania. Wykorzystując tą cechę, możemy odświeżać dane np. co minutę, co przedstawia listing \ref{lst:interval}
+\begin{lstlisting}[caption={Odświeżanie danych co wybrany okres czasu.},label=lst:interval]
+$interval (->
+  $scope.dashboard()
+  $scope.fetch_notifications()
+  $scope.temp_chart()
+).bind(this), 60000  
+\end{lstlisting}
+% subsection dashboard (end)
+% section front_end (end)
+% chapter implementacja (end)
+
+\chapter{Testy} % (fold)
+\label{cha:testy}
+Aplikacja testowana jest na dwa sposoby: statyczną analizę kodu oraz testy jednostkowe. Narzędziem do statycznej analizy kodu jest Rubocop oraz wtyczka do programu Sublime Text 3, która na bieżąco przeprowadza analizę kodu i~wyświetla znalezione błędy. Testy jednostkowe są przeprowadzane przy pomocy narzędzia RSpec oraz FactoryGirl. 
+Wybrałem tą bibliotekę, ponieważ wspiera ona idee Model-View-Controller, w~oparciu o~którą powstała moja aplikacja. Dużą wygodą jest również automatyczna konfiguracja środowiska testowego, która polega m. in.  na osobnej, testowej bazie danych, która jest tworzona na początku wykonywania testów i~czyszczona po zakończeniu każdego przypadku testowege.
+
+RSpec posiada bardzo intuicyjną składnie. Testy podzielone są na 3 poziomową strukturę, każdy poziom zaczyna się słowem kluczowym:
+\begin{enumerate}
+  \item ,,describe'' – tu definiujemy jaką funkcje/klasę/moduł ma sprawdzać dany zbiór testów,
+  \item ,,context'' – to miejsce służy do określenia warunków testu,
+  \item ,,it'' – mówi nam jak powinien się zachować testowany moduł.
+\end{enumerate}
+
+Przykładowy pojedynczy przypadek testowy:
+\begin{lstlisting}[caption={Test kontrolera HomeController.}]
+require 'rails_helper'
+
+RSpec.describe HomeController, type: :controller do
+  describe 'GET dashboard' do
+    before(:each) do
+      @sensor = FactoryGirl.create(:sensor)
+      @temp = FactoryGirl.create_list(:temperature_data, 60,
+                                      sensor_id: @sensor.id)
+      t_temp = Time.zone.now
+      @t_now = Time.new(t_temp.year, t_temp.month, t_temp.day,
+                        t_temp.hour, t_temp.min, 0, Time.zone.now.strftime('%:z'))
+      @temp.each_with_index do |temp, index|
+        temp.update_attributes(created_at: Time.zone.now - index.minutes)
+      end
+      @user = FactoryGirl.create(:user)
+      sign_in @user
+      get :dashboard
+    end
+    it { is_expected.to respond_with :ok }
+    it { expect(response.body.size).to eq(44) }
+  end
+
+  describe 'GET temp_chart' do
+    before(:each) do
+      @sensor = FactoryGirl.create(:sensor)
+      @temp = FactoryGirl.create_list(:temperature_data, 60,
+                                      sensor_id: @sensor.id)
+      t_temp = Time.zone.now
+      @t_now = Time.new(t_temp.year, t_temp.month, t_temp.day,
+                        t_temp.hour, t_temp.min, 0, Time.zone.now.strftime('%:z'))
+      @temp.each_with_index do |temp, index|
+        temp.update_attributes(created_at: Time.zone.now - index.minutes)
+      end
+      @user = FactoryGirl.create(:user)
+      sign_in @user
+      get :temp_chart
+    end
+    it { is_expected.to respond_with :ok }
+  end
+end  
+\end{lstlisting}
+
+Powyższy test ma za zadanie sprawdzić czy zapytanie HTTP GET na adresy /dashboard oraz /temp\_chart zostaną przekazane do funkcji ,,dashboard'' oraz ,,temp\_chart'' klasy ,,HomeController'' oraz zwrócą poprawną odpowiedź HTTP ze statusem 200.
+
+Dla ułatwienia wprowadzania atrybutów do testowanych metod lub dodawania rekordów do bazy danych nie wykorzystując napisanych przez siebie metod posłużyłem się biblioteką ,,FactoryGirl'', która implementuje wzorzec projektowy fabryki. Definicja obiektu jest bardzo prosta:
+
+\begin{lstlisting}[language=Ruby, caption={Definicja FactoryGirl.}]
+FactoryGirl.define do
+  factory :sensor do
+    number '123'
+    state true
+    room
+  end
+end
+\end{lstlisting}
+% chapter testy (end)
+
+\chapter{Opis wdrożenia} % (fold)
+\label{cha:instrukcja_wdro_enia}
+Wdrożenie aplikacji opartej na MySQL, Ruby on Rails oraz AngularJS jest dość prostą czynnością. Na systemie Linux/Unix można ją wykonać w~kilku poniższych krokach:
+\begin{enumerate}
+  \item instalacja MySQL - najwygodniejsze i~najszybsze jest pobranie bazy danych z~repozytorium,
+  \item instalacja ruby - jest kilka narzędzi, które automatyzują proces instalacji Ruby'ego, jednym z~nich jest RVM (\emph{Ruby Version Manager}). Instalacja przebiega w~dwóch krokach (polecenia należy wpisać w~terminalu):
+  \begin{enumerate}
+    \item gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 
+    \item \textbackslash{}curl -sSL https://get.rvm.io | bash -s stable
+  \end{enumerate}
+  \item następnie, w~głównym folderze projektu należy wywołać komendę ,,bundle install'', która zainstaluje wszystkie gemy wymienione w~pliku Gemfile (w tym również framework Rails)
+  \item kolejnym krokiem jest utworzenie bazy danych - służy do tego polecenie ,,rake db:create'',
+  \item następnie należy wgrać schemat bazy danych oraz ewentualne seedy poleceniem\\,,rake db:migrate db:seed'',
+  \item ostatnim etapem jest uruchomienie serwera webowego w~środowisku produkcyjnym bądź developerskim. w~przypadku tego projektu, poza standardowym serwerem znajdującym się w~Railsach, dostępny jest Passenger, którego można uruchomić poleceniem\\,,passenger start -e production'' dla środowiska produkcyjnego,
+  \item aby korzstać ze środowiska produkcyjnego, należy przed uruchomieniem serwera webowego wykonać polecenie ,,rake assets:precompile'',
+  \item dodatkowo w~programie zaimplementowany jest mechanizm wykonywania zadań w tle o~określonym czasie - aby ta funkcjonalność działała należy uruchomić program clockwork poleceniem ,,clockwork config/clockwork.rb''.
+\end{enumerate}
+% chapter instrukcja_wdro_enia (end)
+
+\chapter{Instrukcja użytkownika} % (fold)
+\label{cha:instrukcja_u_ytkownika}
+Pierwszym ekranem, jaki widzi nowy użytkownik, jest ekran rejestracji. z~tego poziomu należy stworzyć konto.
+\begin{figure}[h]
+\centering
+\includegraphics[width=\linewidth]{./register}
+\caption{Ekran rejestracji.}
+\label{fig:ekran_rejestracji}
+\end{figure}
+
+Po założeniu konta użytkownik może zalogować się  do systemu.
+\begin{figure}[h]
+\centering
+\includegraphics[width=\linewidth]{./login}
+\caption{Ekran logowania.}
+\label{fig:ekran_logowania}
+\end{figure}
+% chapter instrukcja_u_ytkownika (end)
+\clearpage
+Po zalogowaniu użytkownik przekierowywany jest na stronę przedstawiającą dashboard z~najważniejszymi informacjami na temat systemu.
+\begin{figure}[h]
+\centering
+\includegraphics[width=\linewidth]{./dashboard}
+\caption{Ekran dashboardu.}
+\label{fig:ekran_dashboardu}
+\end{figure}
+
+Z poziomu dashboardu użytkownik może dodać nowy pokój, a~następnie dodać do niego sensor.
+\begin{figure}[h]
+\centering
+\includegraphics[width=\linewidth]{./rooms1}
+\caption{Ekran dodawania pokoi.}
+\label{fig:ekran_rejestracji}
+\end{figure}
+\clearpage
+\begin{figure}[h]
+\centering
+\includegraphics[width=\linewidth]{./sensors}
+\caption{Ekran dodawania sensorów.}
+\label{fig:ekran_rejestracji}
+\end{figure}
+
+Dostępna jest jeszcze zakładka charts, gdzie możemy wybrać ,,Temperature'' oraz ,,Humidity''. Podstrony te prezentują wykresy temperatury lub wilgotności powietrza, takie, jak na stronie dashboardu.
+
 \chapter{Podsumowanie}
 
 \renewcommand\bibname{Literatura}
@@ -303,10 +687,13 @@ Jako system bazodanowy wykorzystany został MySQL w wersji 5.6. Niewątpliwymi z
 	\addcontentsline{toc}{chapter}{Literatura}
 	
 	\bibitem{rails guide}
-	\emph{Ruby on Rails Guides}, dostępne pod adresem: \url{http://guides.rubyonrails.org/},\\ aktualne na dzień 14.06.2015r.
+	\emph{Ruby on Rails Guides}, dostępne pod adresem: \url{http://guides.rubyonrails.org/},\\ aktualne na dzień 14.11.2015r.
 	
 	\bibitem{angular guide}
-	\emph{AngularJS Developer Guide}, dostępne pod adresem: \url{https://docs.angularjs.org/guide}, aktualne na dzień 14.06.2015r.
+	\emph{AngularJS Developer Guide}, dostępne pod adresem: \url{https://docs.angularjs.org/guide}, aktualne na dzień 20.11.2015r.
+
+	\bibitem{arduino}
+	\emph{Arduino Pro Mini}, dostępne pod adresem: \url{https://www.arduino.cc/en/Main/ArduinoBoardProMini}, aktualne na dzień 24.11.2015r.
 
 	\bibitem{inteligentne domy}
 	Piątek Z., \emph{Od automatyki budynkowej do inteligentnych domów}, dostępne pod adresem \url{http://automatykab2b.pl/}, aktualne na dzień 31.10.2015r.
